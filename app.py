@@ -2,6 +2,8 @@
 
 from nicegui import ui
 from database import init_db, seed_from_csv
+from pages.cars import cars_page
+from pages.add_car import add_car_page
 
 init_db()
 seed_from_csv("cars_data.csv")
