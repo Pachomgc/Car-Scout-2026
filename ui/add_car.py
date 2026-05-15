@@ -1,6 +1,6 @@
 from datetime import datetime
 from nicegui import ui
-from car_service import add_car
+from services.car_service import *
  
  
 def add_car_page() -> None:

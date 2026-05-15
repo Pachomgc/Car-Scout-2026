@@ -1,5 +1,6 @@
 import csv
 import os
+
 from sqlalchemy import create_engine, Column, Integer, String, Float
 from sqlalchemy.orm import DeclarativeBase, Session
 
@@ -15,21 +16,6 @@ class Base(DeclarativeBase):
 
 
 
-class Car(Base):
-    
-
-    __tablename__ = "cars"
-
-    id       = Column(Integer, primary_key=True, autoincrement=True)
-    brand    = Column(String(50),  nullable=False)
-    model    = Column(String(50),  nullable=False)
-    year     = Column(Integer,     nullable=False)
-    km       = Column(Integer,     nullable=False)
-    trans    = Column(String(20),  nullable=False)  
-    price    = Column(Float,       nullable=False)
-
-    def __repr__(self) -> str:
-        return f"<Car {self.brand} {self.model} ({self.year}) CHF {self.price}>"
 
 
 
@@ -40,12 +26,14 @@ def get_session() -> Session:
 
 
 def init_db() -> None:
+    from domain.car import Car 
     
     Base.metadata.create_all(engine)
     print("Database initialised.")
 
 
 def seed_from_csv(csv_path: str) -> None:
+    from domain.car import Car
     
     with get_session() as session:
        

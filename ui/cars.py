@@ -1,5 +1,5 @@
 from nicegui import ui
-from car_service import get_all_cars, delete_car
+from services.car_service import *
  
  
 def cars_page() -> None:
