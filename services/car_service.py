@@ -29,3 +29,6 @@ def get_all_cars():
 
 def delete_car(car_id):
     CarDAO.delete(car_id)
+
+def search_cars(search_text):
+    return CarDAO.search(search_text)

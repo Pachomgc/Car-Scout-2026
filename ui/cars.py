@@ -1,13 +1,26 @@
 from nicegui import ui
-from services.car_service import get_all_cars, delete_car
+from services.car_service import get_all_cars, delete_car, search_cars
 
 
 @ui.page("/cars")
 def cars_page():
 
     ui.label("All Cars").classes("text-3xl font-bold m-6")
+    search_input = ui.input(
+    label="Search by brand or model",
+    placeholder="Example: BMW, Audi, M3..."
+    ).classes("w-1/2 mx-6")
 
-    cars = get_all_cars()
+    with ui.row().classes("mx-6 mb-4"):
+        ui.button("Search", on_click=lambda: ui.navigate.to("/cars")).props("color=primary")
+        ui.button("Reset", on_click=lambda: ui.navigate.to("/cars")).props("outline")
+
+    search_text = search_input.value
+
+    if search_text:
+        cars = search_cars(search_text)
+    else:
+        cars = get_all_cars()
 
     columns = [
         {"name": "brand", "label": "Brand", "field": "brand"},

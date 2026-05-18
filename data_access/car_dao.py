@@ -10,6 +10,14 @@ class CarDAO:
             return session.query(Car).all()
 
     @staticmethod
+    def search(search_text: str):
+        with get_session() as session:
+            return session.query(Car).filter(
+                (Car.brand.ilike(f"%{search_text}%")) |
+                (Car.model.ilike(f"%{search_text}%"))
+            ).all()
+
+    @staticmethod
     def add(car: Car):
         with get_session() as session:
             session.add(car)
