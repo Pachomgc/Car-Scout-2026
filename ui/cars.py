@@ -11,7 +11,7 @@ def cars_page():
     placeholder="Example: BMW, Audi, M3..."
     ).classes("w-1/2 mx-6")
 
-    with ui.row().classes("mx-6 mb-4"):
+    with ui.row().classes("mx-6 mb-4 gap-3"):
         ui.button("Search", on_click=lambda: ui.navigate.to("/cars")).props("color=primary")
         ui.button("Reset", on_click=lambda: ui.navigate.to("/cars")).props("outline")
 

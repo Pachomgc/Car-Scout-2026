@@ -14,7 +14,7 @@ seed_from_csv("cars_data.csv")
 def index():
     
     with ui.column().classes("items-center justify-center w-full mt-16 gap-4"):
-        ui.label("CAR SCOUT").classes("text-4xl font-bold")
+        ui.label("CAR SCOUT").classes("text-2xl font-bold")
         ui.label("Find your perfect car").classes("text-lg text-gray-500")
         with ui.row().classes("gap-4 mt-6"):
             ui.button("Browse Cars", on_click=lambda: ui.navigate.to("/cars")).props("color=primary size=lg")
@@ -35,7 +35,7 @@ def add():
  
 def _nav_bar():
    
-    with ui.header().classes("bg-primary text-white items-center px-6 py-3 gap-6"):
+    with ui.header().classes("bg-blue-700 text-white"):
         ui.label("CAR SCOUT").classes("text-xl font-bold cursor-pointer").on(
             "click", lambda: ui.navigate.to("/")
         )
