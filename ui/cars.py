@@ -32,6 +32,11 @@ def cars_page():
         {"name": "actions", "label": "Actions", "field": "actions"},
     ]
 
+
+    rows = []
+
+
+
     rows = []
 
     for car in cars:
@@ -56,6 +61,13 @@ def cars_page():
         """
         <q-td :props="props">
             <q-btn
+                color="primary"
+                label="View"
+                dense
+                class="q-mr-sm"
+                @click="$parent.$emit('view', props.row.id)"
+            />
+            <q-btn
                 color="red"
                 icon="delete"
                 dense
@@ -66,8 +78,11 @@ def cars_page():
         """
     )
 
+    table.on("view", lambda e: ui.navigate.to(f"/cars/{e.args}"))
+
     def handle_delete(e):
         delete_car(e.args)
+        ui.notify("Car deleted")
         ui.navigate.to("/cars")
 
     table.on("delete", handle_delete)

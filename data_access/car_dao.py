@@ -18,6 +18,11 @@ class CarDAO:
             ).all()
 
     @staticmethod
+    def get_by_id(car_id: int):
+        with get_session() as session:
+            return session.query(Car).filter(Car.id == car_id).first()
+
+    @staticmethod
     def add(car: Car):
         with get_session() as session:
             session.add(car)

@@ -32,3 +32,6 @@ def delete_car(car_id):
 
 def search_cars(search_text):
     return CarDAO.search(search_text)
+
+def get_car_by_id(car_id):
+    return CarDAO.get_by_id(car_id)
