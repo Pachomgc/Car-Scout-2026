@@ -5,6 +5,7 @@ from data_access.database import init_db, seed_from_csv
 from ui.cars import cars_page
 from ui.add_car import add_car_page
 from ui.car_detail import car_detail_page
+from ui.edit_car import edit_car_page
 
 init_db()
 seed_from_csv("cars_data.csv")

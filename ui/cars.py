@@ -68,6 +68,13 @@ def cars_page():
                 @click="$parent.$emit('view', props.row.id)"
             />
             <q-btn
+                color="orange"
+                label="Edit"
+                dense
+                class="q-mr-sm"
+                @click="$parent.$emit('edit', props.row.id)"
+            />
+            <q-btn
                 color="red"
                 icon="delete"
                 dense
@@ -79,6 +86,7 @@ def cars_page():
     )
 
     table.on("view", lambda e: ui.navigate.to(f"/cars/{e.args}"))
+    table.on("edit", lambda e: ui.navigate.to(f"/cars/edit/{e.args}"))
 
     def handle_delete(e):
         delete_car(e.args)

@@ -35,3 +35,6 @@ def search_cars(search_text):
 
 def get_car_by_id(car_id):
     return CarDAO.get_by_id(car_id)
+
+def update_car(car_id, brand, model, year, km, trans, price):
+    CarDAO.update(car_id, brand, model, year, km, trans, price)

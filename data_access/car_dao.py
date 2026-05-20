@@ -21,6 +21,25 @@ class CarDAO:
     def get_by_id(car_id: int):
         with get_session() as session:
             return session.query(Car).filter(Car.id == car_id).first()
+    
+    @staticmethod
+    def update(car_id, brand, model, year, km, trans, price):
+
+        with get_session() as session:
+
+            car = session.query(Car).filter(
+                Car.id == car_id
+            ).first()
+
+            if car:
+                car.brand = brand
+                car.model = model
+                car.year = year
+                car.km = km
+                car.trans = trans
+                car.price = price
+
+                session.commit()
 
     @staticmethod
     def add(car: Car):
