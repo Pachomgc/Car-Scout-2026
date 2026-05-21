@@ -2,25 +2,14 @@ from nicegui import ui
 from services.car_service import get_all_cars, delete_car, search_cars
 
 
-@ui.page("/cars")
 def cars_page():
 
     ui.label("All Cars").classes("text-3xl font-bold m-6")
+
     search_input = ui.input(
-    label="Search by brand or model",
-    placeholder="Example: BMW, Audi, M3..."
+        label="Search by brand or model",
+        placeholder="Example: BMW, Audi, M3..."
     ).classes("w-1/2 mx-6")
-
-    with ui.row().classes("mx-6 mb-4 gap-3"):
-        ui.button("Search", on_click=lambda: ui.navigate.to("/cars")).props("color=primary")
-        ui.button("Reset", on_click=lambda: ui.navigate.to("/cars")).props("outline")
-
-    search_text = search_input.value
-
-    if search_text:
-        cars = search_cars(search_text)
-    else:
-        cars = get_all_cars()
 
     columns = [
         {"name": "brand", "label": "Brand", "field": "brand"},
@@ -32,29 +21,49 @@ def cars_page():
         {"name": "actions", "label": "Actions", "field": "actions"},
     ]
 
+    def build_rows(cars):
+        rows = []
 
-    rows = []
+        for car in cars:
+            rows.append({
+                "id": car.id,
+                "brand": car.brand,
+                "model": car.model,
+                "year": car.year,
+                "km": f"{car.km:,}",
+                "trans": car.trans,
+                "price": f"CHF {car.price:,.0f}",
+            })
 
+        return rows
 
-
-    rows = []
-
-    for car in cars:
-        rows.append({
-            "id": car.id,
-            "brand": car.brand,
-            "model": car.model,
-            "year": car.year,
-            "km": f"{car.km:,}",
-            "trans": car.trans,
-            "price": f"CHF {car.price:,.0f}",
-        })
+    cars = get_all_cars()
 
     table = ui.table(
         columns=columns,
-        rows=rows,
+        rows=build_rows(cars),
         row_key="id",
     ).classes("w-full m-6")
+
+    def do_search():
+        search_text = search_input.value
+
+        if search_text:
+            filtered_cars = search_cars(search_text.strip())
+            table.rows = build_rows(filtered_cars)
+        else:
+            table.rows = build_rows(get_all_cars())
+
+        table.update()
+
+    def reset_search():
+        search_input.value = ""
+        table.rows = build_rows(get_all_cars())
+        table.update()
+
+    with ui.row().classes("mx-6 mb-4 gap-3"):
+        ui.button("Search", on_click=do_search).props("color=primary")
+        ui.button("Reset", on_click=reset_search).props("outline")
 
     table.add_slot(
         "body-cell-actions",
@@ -90,7 +99,8 @@ def cars_page():
 
     def handle_delete(e):
         delete_car(e.args)
+        table.rows = build_rows(get_all_cars())
+        table.update()
         ui.notify("Car deleted")
-        ui.navigate.to("/cars")
 
     table.on("delete", handle_delete)
