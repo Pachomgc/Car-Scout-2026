@@ -43,6 +43,27 @@ def add_car_page() -> None:
                 ui.notify(" | ".join(errors), color="negative")
                 return
  
+            if not brand.value or not model.value:
+                ui.notify(
+                    "Brand and Model are required",
+                    color="red"
+                )
+                return
+
+            if price.value <= 0:
+                ui.notify(
+                    "Price must be greater than 0",
+                    color="red"
+                )
+                return
+
+            if year.value < 1900 or year.value > 2030:
+                ui.notify(
+                    "Invalid year",
+                    color="red"
+                )
+                return
+
             add_car(
                 brand=brand.value.strip(),
                 model=model.value.strip(),

@@ -29,6 +29,28 @@ def edit_car_page(car_id: int):
         price = ui.number("Price", value=car.price).classes("w-full")
 
         def save():
+
+            if not brand.value or not model.value:
+                ui.notify(
+                    "Brand and Model are required",
+                    color="red"
+                )
+                return
+
+            if price.value <= 0:
+                ui.notify(
+                    "Price must be greater than 0",
+                    color="red"
+                )
+                return
+
+            if year.value < 1900 or year.value > 2030:
+                ui.notify(
+                    "Invalid year",
+                    color="red"
+                )
+                return
+                
             update_car(
                 car_id,
                 brand.value,
