@@ -11,6 +11,11 @@ def cars_page():
         placeholder="Example: BMW, Audi, M3..."
     ).classes("w-1/2 mx-6")
 
+    search_input.on(
+        "keydown.enter",
+        lambda e: do_search()
+    )
+
     columns = [
         {"name": "brand", "label": "Brand", "field": "brand"},
         {"name": "model", "label": "Model", "field": "model"},
